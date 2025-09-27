@@ -11,7 +11,7 @@ public class hello {
 
     @GetMapping("/hello")
     public String getMethodName() {
-        return "HELLO";
+        return "HELLO1";
     }
     
 }
