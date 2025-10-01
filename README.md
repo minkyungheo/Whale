@@ -1,4 +1,4 @@
-# Whale
+# Whale 🐳
 ---
 # Docker CI/CD 배포 자동화 프로젝트
 
