@@ -1,0 +1,18 @@
+services:
+  my-app:
+    image: alsruddl/whale_store:latest
+    container_name: whale_store
+    ports:
+      - "8085:8085"
+
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: always
+    environment:
+      - REPO_USER=${DOCKERHUB_USERNAME}
+      - REPO_PASS=${DOCKERHUB_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --cleanup --interval 120
