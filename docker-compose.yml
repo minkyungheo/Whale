@@ -1,18 +1,42 @@
-services:
-  my-app:
-    image: alsruddl/whale_store:latest
-    container_name: whale_store
-    ports:
-      - "8085:8085"
+version: '3.8'
 
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my_app
+    ports:
+      - "8085:8085" # 호스트와 컨테이너 간 포트 매핑
+    restart: always
 
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
-    restart: always
-    environment:
-      - REPO_USER=${DOCKERHUB_USERNAME}
-      - REPO_PASS=${DOCKERHUB_TOKEN}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: --cleanup --interval 120
+      - /var/run/docker.sock:/var/run/docker.sock # Docker 데몬 소켓 공유
+    restart: always
+    command: —interval 300 # 5분마다 업데이트 확인
+
+
+
+
+
+# services:
+#   my-app:
+#     image: alsruddl/whale_store:latest
+#     container_name: whale_store
+#     ports:
+#       - "8085:8085"
+
+
+#   watchtower:
+#     image: containrrr/watchtower
+#     container_name: watchtower
+#     restart: always
+#     environment:
+#       - REPO_USER=${DOCKERHUB_USERNAME}
+#       - REPO_PASS=${DOCKERHUB_TOKEN}
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#     command: --cleanup --interval 120
