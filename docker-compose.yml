@@ -1,22 +1,14 @@
 version: '3.8'
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: my_app
-    ports:
-      - "8085:8085" # 호스트와 컨테이너 간 포트 매핑
-    restart: always
-
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Docker 데몬 소켓 공유
     restart: always
-    command: —interval 300 # 5분마다 업데이트 확인
+    command: ["--cleanup", "--interval", "20"]
+
 
 
 
