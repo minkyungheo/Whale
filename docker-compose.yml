@@ -1,13 +1,44 @@
 version: '3.8'
 
 services:
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    volumes:
+    app:
+     image: alsruddl/whale_store:latest
+     container_name: spring_app
+     ports:
+      - "8085:8085"
+     environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql_db:3306/mydb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+     depends_on:
+      - mysql
+     restart: always
+    mysql:
+     image: mysql:8.0
+     container_name: mysql
+     restart: always
+     environment:
+      MYSQL_ROOT_PASSWORD: 1234      
+      MYSQL_DATABASE: mydb          
+      MYSQL_USER: user               
+      MYSQL_PASSWORD: 1234           
+     ports:
+      - "3306:3306"                  
+     volumes:
+      - ./mysql-data:/var/lib/mysql  
+    watchtower:
+      image: containrrr/watchtower
+      container_name: watchtower
+      volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Docker 데몬 소켓 공유
-    restart: always
-    command: ["--cleanup", "--interval", "20"]
+      restart: always
+      command: ["--cleanup", "--interval", "20"]
+
+
+
+    
+
+
 
 
 
